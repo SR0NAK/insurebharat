@@ -11,17 +11,17 @@ const Index = () => {
   const navigate = useNavigate();
 
   const upcomingRenewals = [
-    { id: 1, customer: "John Smith", policy: "AUTO-2024-001", expires: "2024-06-15", premium: 1250, priority: "high" },
-    { id: 2, customer: "Sarah Johnson", policy: "AUTO-2024-002", expires: "2024-06-18", premium: 980, priority: "medium" },
-    { id: 3, customer: "Mike Chen", policy: "AUTO-2024-003", expires: "2024-06-22", premium: 1450, priority: "high" },
-    { id: 4, customer: "Lisa Wilson", policy: "AUTO-2024-004", expires: "2024-06-25", premium: 750, priority: "low" },
+    { id: 1, customer: "Amit Kumar", policy: "AUTO-2024-001", expires: "15/06/2024", premium: 95000, priority: "high" },
+    { id: 2, customer: "Priya Sharma", policy: "AUTO-2024-002", expires: "18/06/2024", premium: 78000, priority: "medium" },
+    { id: 3, customer: "Rohit Singh", policy: "AUTO-2024-003", expires: "22/06/2024", premium: 125000, priority: "high" },
+    { id: 4, customer: "Sunita Patel", policy: "AUTO-2024-004", expires: "25/06/2024", premium: 65000, priority: "low" },
   ];
 
   const recentActivities = [
-    { id: 1, type: "scan", description: "New policy document scanned for John Doe", time: "2 hours ago" },
-    { id: 2, type: "renewal", description: "Renewal reminder sent to Sarah Johnson", time: "4 hours ago" },
-    { id: 3, type: "customer", description: "New customer Mike Wilson added", time: "6 hours ago" },
-    { id: 4, type: "policy", description: "Policy updated for Lisa Brown", time: "1 day ago" },
+    { id: 1, type: "scan", description: "New policy document scanned for Vikram Gupta", time: "2 hours ago" },
+    { id: 2, type: "renewal", description: "Renewal reminder sent to Priya Sharma", time: "4 hours ago" },
+    { id: 3, type: "customer", description: "New customer Anjali Mehta added", time: "6 hours ago" },
+    { id: 4, type: "policy", description: "Policy updated for Ravi Kumar", time: "1 day ago" },
   ];
 
   const getPriorityColor = (priority: string) => {
@@ -37,10 +37,11 @@ const Index = () => {
     <div className="min-h-screen bg-gray-50">
       <Navigation />
       
-      <div className="p-6 max-w-7xl mx-auto">
+      {/* Main content with proper spacing for sidebar */}
+      <div className="lg:ml-64 p-6">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Insurance Broker CRM Dashboard</h1>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">InsureBharat CRM Dashboard</h1>
           <p className="text-gray-600">Manage your policies, customers, and renewals efficiently</p>
         </div>
 
@@ -85,7 +86,7 @@ const Index = () => {
               <TrendingUp className="h-4 w-4 text-purple-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-purple-900">$89,247</div>
+              <div className="text-2xl font-bold text-purple-900">₹15,24,750</div>
               <p className="text-xs text-purple-600">+18% from last month</p>
             </CardContent>
           </Card>
@@ -126,7 +127,7 @@ const Index = () => {
                       <p className="text-sm text-gray-500">Expires: {renewal.expires}</p>
                     </div>
                     <div className="text-right">
-                      <p className="font-semibold text-lg">${renewal.premium}</p>
+                      <p className="font-semibold text-lg">₹{(renewal.premium / 100).toLocaleString('en-IN')}</p>
                       <Button size="sm" className="mt-2">
                         Contact
                       </Button>
@@ -165,10 +166,10 @@ const Index = () => {
                 <Button 
                   className="w-full justify-start" 
                   variant="outline"
-                  onClick={() => navigate('/calendar')}
+                  onClick={() => navigate('/renewals')}
                 >
                   <Calendar className="h-4 w-4 mr-2" />
-                  View Calendar
+                  View Renewals
                 </Button>
                 <Button 
                   className="w-full justify-start" 
