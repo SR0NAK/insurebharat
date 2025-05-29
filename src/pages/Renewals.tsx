@@ -23,81 +23,81 @@ const Renewals = () => {
   const renewals = [
     {
       id: 1,
-      customer: "John Smith",
+      customer: "Amit Kumar",
       policy: "AUTO-2024-001",
       expires: new Date("2024-06-15"),
-      premium: 1250,
+      premium: 95000,
       priority: "high",
       status: "pending",
       daysLeft: 17,
       contactAttempts: 0,
       lastContact: null,
-      vehicleInfo: "2022 Toyota Camry"
+      vehicleInfo: "2022 Maruti Suzuki Swift"
     },
     {
       id: 2,
-      customer: "Sarah Johnson",
+      customer: "Priya Sharma",
       policy: "AUTO-2024-002",
       expires: new Date("2024-06-18"),
-      premium: 980,
+      premium: 78000,
       priority: "medium",
       status: "contacted",
       daysLeft: 20,
       contactAttempts: 2,
       lastContact: "2024-05-25",
-      vehicleInfo: "2021 Honda Civic"
+      vehicleInfo: "2021 Hyundai i20"
     },
     {
       id: 3,
-      customer: "Mike Chen",
+      customer: "Rohit Singh",
       policy: "AUTO-2024-003",
       expires: new Date("2024-06-22"),
-      premium: 1450,
+      premium: 125000,
       priority: "high",
       status: "pending",
       daysLeft: 24,
       contactAttempts: 1,
       lastContact: "2024-05-20",
-      vehicleInfo: "2023 BMW X5"
+      vehicleInfo: "2023 Tata Nexon EV"
     },
     {
       id: 4,
-      customer: "Lisa Wilson",
+      customer: "Sunita Patel",
       policy: "AUTO-2024-004",
       expires: new Date("2024-06-25"),
-      premium: 750,
+      premium: 65000,
       priority: "low",
       status: "renewed",
       daysLeft: 27,
       contactAttempts: 1,
       lastContact: "2024-05-22",
-      vehicleInfo: "2020 Ford Focus"
+      vehicleInfo: "2020 Honda City"
     },
     {
       id: 5,
-      customer: "David Brown",
+      customer: "Vikram Gupta",
       policy: "AUTO-2024-005",
       expires: new Date("2024-07-02"),
-      premium: 1850,
+      premium: 145000,
       priority: "high",
       status: "pending",
       daysLeft: 34,
       contactAttempts: 0,
       lastContact: null,
-      vehicleInfo: "2023 Mercedes C-Class"
+      vehicleInfo: "2023 Mahindra XUV700"
     },
     {
       id: 6,
-      customer: "Emily Davis",
+      customer: "Anjali Mehta",
       policy: "AUTO-2024-006",
       expires: new Date("2024-07-08"),
-      premium: 1120,
+      premium: 89000,
       priority: "medium",
       status: "declined",
       daysLeft: 40,
       contactAttempts: 3,
       lastContact: "2024-05-18",
-      vehicleInfo: "2021 Nissan Altima"
+      vehicleInfo: "2021 Kia Seltos"
     }
   ];
 
@@ -137,7 +137,8 @@ const Renewals = () => {
     <div className="min-h-screen bg-gray-50">
       <Navigation />
       
-      <div className="lg:pl-64 p-6">
+      {/* Main content with proper spacing for sidebar */}
+      <div className="lg:ml-64 p-6">
         {/* Header */}
         <div className="mb-8">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -186,7 +187,7 @@ const Renewals = () => {
               <Clock className="h-4 w-4 text-blue-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-blue-900">${totalPremiumAtRisk.toLocaleString()}</div>
+              <div className="text-2xl font-bold text-blue-900">₹{(totalPremiumAtRisk / 100).toLocaleString('en-IN')}</div>
               <p className="text-xs text-blue-600">Potential loss</p>
             </CardContent>
           </Card>
@@ -238,7 +239,7 @@ const Renewals = () => {
                       <div className="text-sm text-gray-600 space-y-1">
                         <p>Policy: {renewal.policy}</p>
                         <p>Vehicle: {renewal.vehicleInfo}</p>
-                        <p>Premium: <span className="font-semibold text-green-600">${renewal.premium}</span></p>
+                        <p>Premium: <span className="font-semibold text-green-600">₹{(renewal.premium / 100).toLocaleString('en-IN')}</span></p>
                       </div>
                     </div>
 
@@ -252,7 +253,7 @@ const Renewals = () => {
                         {renewal.daysLeft} days left
                       </div>
                       <div className="text-sm text-gray-600">
-                        Expires: {renewal.expires.toLocaleDateString()}
+                        Expires: {renewal.expires.toLocaleDateString('en-IN')}
                       </div>
                       {renewal.lastContact && (
                         <div className="text-xs text-gray-500 mt-1">

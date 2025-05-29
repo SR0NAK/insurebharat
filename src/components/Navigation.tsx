@@ -46,8 +46,8 @@ const Navigation = () => {
     <div className="flex flex-col h-full">
       {/* Logo */}
       <div className="p-6 border-b">
-        <h2 className="text-xl font-bold text-blue-900">InsureCRM</h2>
-        <p className="text-sm text-gray-600">Vehicle Insurance Broker</p>
+        <h2 className="text-xl font-bold text-blue-900">InsureBharat</h2>
+        <p className="text-sm text-gray-600">Vehicle Insurance Solutions</p>
       </div>
 
       {/* Navigation Items */}
@@ -83,10 +83,10 @@ const Navigation = () => {
       <div className="p-4 border-t">
         <div className="flex items-center space-x-3">
           <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-            <span className="text-white text-sm font-semibold">JD</span>
+            <span className="text-white text-sm font-semibold">RS</span>
           </div>
           <div className="flex-1">
-            <p className="text-sm font-medium">John Doe</p>
+            <p className="text-sm font-medium">Rajesh Sharma</p>
             <p className="text-xs text-gray-500">Senior Agent</p>
           </div>
         </div>
@@ -96,8 +96,8 @@ const Navigation = () => {
 
   return (
     <>
-      {/* Desktop Navigation */}
-      <div className="hidden lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0 lg:bg-white lg:border-r lg:border-gray-200">
+      {/* Desktop Navigation - Fixed sidebar */}
+      <div className="hidden lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0 lg:bg-white lg:border-r lg:border-gray-200 lg:z-30">
         <NavigationContent />
       </div>
 
@@ -114,7 +114,7 @@ const Navigation = () => {
               <NavigationContent />
             </SheetContent>
           </Sheet>
-          <h1 className="text-lg font-semibold text-blue-900">InsureCRM</h1>
+          <h1 className="text-lg font-semibold text-blue-900">InsureBharat</h1>
         </div>
         
         <div className="flex items-center space-x-2">
@@ -127,8 +127,8 @@ const Navigation = () => {
         </div>
       </div>
 
-      {/* Desktop Header */}
-      <div className="hidden lg:block lg:pl-64">
+      {/* Desktop Header with proper margin for sidebar */}
+      <div className="hidden lg:block lg:ml-64">
         <div className="bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-between">
           <div className="flex-1 max-w-md">
             <div className="relative">
@@ -150,10 +150,10 @@ const Navigation = () => {
             
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                <span className="text-white text-sm font-semibold">JD</span>
+                <span className="text-white text-sm font-semibold">RS</span>
               </div>
               <div>
-                <p className="text-sm font-medium">John Doe</p>
+                <p className="text-sm font-medium">Rajesh Sharma</p>
                 <p className="text-xs text-gray-500">Senior Agent</p>
               </div>
             </div>
