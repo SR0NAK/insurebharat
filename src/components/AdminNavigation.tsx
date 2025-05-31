@@ -19,10 +19,12 @@ import {
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { useAuth } from '@/contexts/AuthContext';
 
 const AdminNavigation = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { signOut, user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
   const navigationItems = [
@@ -39,6 +41,11 @@ const AdminNavigation = () => {
   const handleNavigation = (path: string) => {
     navigate(path);
     setIsOpen(false);
+  };
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate('/');
   };
 
   const isActive = (path: string) => {
@@ -86,10 +93,12 @@ const AdminNavigation = () => {
       <div className="p-4 border-t space-y-3">
         <div className="flex items-center space-x-3">
           <div className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center">
-            <span className="text-white text-sm font-semibold">AS</span>
+            <span className="text-white text-sm font-semibold">
+              {user?.email?.charAt(0).toUpperCase() || 'A'}
+            </span>
           </div>
           <div className="flex-1">
-            <p className="text-sm font-medium">Admin Singh</p>
+            <p className="text-sm font-medium">{user?.email || 'Admin'}</p>
             <p className="text-xs text-gray-500">System Administrator</p>
           </div>
         </div>
@@ -97,7 +106,7 @@ const AdminNavigation = () => {
           variant="outline" 
           size="sm" 
           className="w-full justify-start text-red-600 hover:bg-red-50"
-          onClick={() => navigate('/login')}
+          onClick={handleSignOut}
         >
           <LogOut className="h-4 w-4 mr-2" />
           Logout
@@ -106,7 +115,7 @@ const AdminNavigation = () => {
           variant="ghost" 
           size="sm" 
           className="w-full justify-start"
-          onClick={() => navigate('/')}
+          onClick={() => navigate('/dashboard')}
         >
           Switch to Broker View
         </Button>
@@ -170,10 +179,12 @@ const AdminNavigation = () => {
             
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center">
-                <span className="text-white text-sm font-semibold">AS</span>
+                <span className="text-white text-sm font-semibold">
+                  {user?.email?.charAt(0).toUpperCase() || 'A'}
+                </span>
               </div>
               <div>
-                <p className="text-sm font-medium">Admin Singh</p>
+                <p className="text-sm font-medium">{user?.email || 'Admin'}</p>
                 <p className="text-xs text-gray-500">System Administrator</p>
               </div>
             </div>

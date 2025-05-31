@@ -12,15 +12,18 @@ import {
   Settings,
   Menu,
   Bell,
-  Search
+  Search,
+  LogOut
 } from "lucide-react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { useAuth } from '@/contexts/AuthContext';
 
 const Navigation = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { signOut, user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
   const navigationItems = [
@@ -36,6 +39,11 @@ const Navigation = () => {
   const handleNavigation = (path: string) => {
     navigate(path);
     setIsOpen(false);
+  };
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate('/');
   };
 
   const isActive = (path: string) => {
@@ -80,16 +88,27 @@ const Navigation = () => {
       </nav>
 
       {/* User Info */}
-      <div className="p-4 border-t">
+      <div className="p-4 border-t space-y-3">
         <div className="flex items-center space-x-3">
           <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-            <span className="text-white text-sm font-semibold">RS</span>
+            <span className="text-white text-sm font-semibold">
+              {user?.email?.charAt(0).toUpperCase() || 'U'}
+            </span>
           </div>
           <div className="flex-1">
-            <p className="text-sm font-medium">Rajesh Sharma</p>
-            <p className="text-xs text-gray-500">Senior Agent</p>
+            <p className="text-sm font-medium">{user?.email || 'User'}</p>
+            <p className="text-xs text-gray-500">Agent</p>
           </div>
         </div>
+        <Button 
+          variant="outline" 
+          size="sm" 
+          className="w-full justify-start text-red-600 hover:bg-red-50"
+          onClick={handleSignOut}
+        >
+          <LogOut className="h-4 w-4 mr-2" />
+          Logout
+        </Button>
       </div>
     </div>
   );
@@ -150,11 +169,13 @@ const Navigation = () => {
             
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                <span className="text-white text-sm font-semibold">RS</span>
+                <span className="text-white text-sm font-semibold">
+                  {user?.email?.charAt(0).toUpperCase() || 'U'}
+                </span>
               </div>
               <div>
-                <p className="text-sm font-medium">Rajesh Sharma</p>
-                <p className="text-xs text-gray-500">Senior Agent</p>
+                <p className="text-sm font-medium">{user?.email || 'User'}</p>
+                <p className="text-xs text-gray-500">Agent</p>
               </div>
             </div>
           </div>
