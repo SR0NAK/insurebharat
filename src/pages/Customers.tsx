@@ -23,75 +23,75 @@ const Customers = () => {
   const customers = [
     {
       id: 1,
-      name: "John Smith",
-      email: "john.smith@email.com",
-      phone: "(555) 123-4567",
-      address: "123 Main St, Springfield, IL 62701",
+      name: "Rahul Verma",
+      email: "rahul.verma@email.com",
+      phone: "+91 98765 43210",
+      address: "123 MG Road, Mumbai, Maharashtra 400001",
       policies: 2,
-      totalPremium: 2450,
-      lastContact: "2024-05-28",
+      totalPremium: 245000,
+      lastContact: "28/05/2024",
       status: "active",
-      avatar: "JS"
+      avatar: "RV"
     },
     {
       id: 2,
-      name: "Sarah Johnson",
-      email: "sarah.j@email.com",
-      phone: "(555) 234-5678",
-      address: "456 Oak Ave, Chicago, IL 60601",
+      name: "Priya Sharma",
+      email: "priya.sharma@email.com",
+      phone: "+91 87654 32109",
+      address: "456 CP Road, Delhi, Delhi 110001",
       policies: 1,
-      totalPremium: 980,
-      lastContact: "2024-05-25",
+      totalPremium: 98000,
+      lastContact: "25/05/2024",
       status: "active",
-      avatar: "SJ"
+      avatar: "PS"
     },
     {
       id: 3,
-      name: "Mike Chen",
-      email: "mike.chen@email.com",
-      phone: "(555) 345-6789",
-      address: "789 Pine Rd, Naperville, IL 60540",
+      name: "Arjun Patel",
+      email: "arjun.patel@email.com",
+      phone: "+91 76543 21098",
+      address: "789 SG Highway, Ahmedabad, Gujarat 380001",
       policies: 3,
-      totalPremium: 3200,
-      lastContact: "2024-05-20",
+      totalPremium: 320000,
+      lastContact: "20/05/2024",
       status: "pending",
-      avatar: "MC"
+      avatar: "AP"
     },
     {
       id: 4,
-      name: "Lisa Wilson",
-      email: "lisa.wilson@email.com",
-      phone: "(555) 456-7890",
-      address: "321 Elm St, Peoria, IL 61601",
+      name: "Sneha Reddy",
+      email: "sneha.reddy@email.com",
+      phone: "+91 65432 10987",
+      address: "321 Brigade Road, Bangalore, Karnataka 560001",
       policies: 1,
-      totalPremium: 750,
-      lastContact: "2024-05-15",
+      totalPremium: 75000,
+      lastContact: "15/05/2024",
       status: "inactive",
-      avatar: "LW"
+      avatar: "SR"
     },
     {
       id: 5,
-      name: "David Brown",
-      email: "david.b@email.com",
-      phone: "(555) 567-8901",
-      address: "654 Maple Dr, Rockford, IL 61101",
+      name: "Vikram Singh",
+      email: "vikram.singh@email.com",
+      phone: "+91 54321 09876",
+      address: "654 Park Street, Kolkata, West Bengal 700001",
       policies: 2,
-      totalPremium: 1850,
-      lastContact: "2024-05-22",
+      totalPremium: 185000,
+      lastContact: "22/05/2024",
       status: "active",
-      avatar: "DB"
+      avatar: "VS"
     },
     {
       id: 6,
-      name: "Emily Davis",
-      email: "emily.davis@email.com",
-      phone: "(555) 678-9012",
-      address: "987 Cedar Ln, Aurora, IL 60502",
+      name: "Anita Gupta",
+      email: "anita.gupta@email.com",
+      phone: "+91 43210 98765",
+      address: "987 Civil Lines, Jaipur, Rajasthan 302001",
       policies: 1,
-      totalPremium: 1120,
-      lastContact: "2024-05-18",
+      totalPremium: 112000,
+      lastContact: "18/05/2024",
       status: "active",
-      avatar: "ED"
+      avatar: "AG"
     }
   ];
 
@@ -114,7 +114,7 @@ const Customers = () => {
     <div className="min-h-screen bg-gray-50">
       <Navigation />
       
-      <div className="lg:pl-64 p-6">
+      <div className="lg:ml-64 p-6">
         {/* Header */}
         <div className="mb-8">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -203,7 +203,7 @@ const Customers = () => {
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-gray-600">Total Premium</span>
-                    <span className="font-semibold text-green-600">${customer.totalPremium}</span>
+                    <span className="font-semibold text-green-600">₹{(customer.totalPremium / 100).toLocaleString('en-IN')}</span>
                   </div>
                 </div>
 
@@ -260,7 +260,7 @@ const Customers = () => {
           <Card>
             <CardContent className="p-4 text-center">
               <div className="text-2xl font-bold text-orange-600">
-                ${customers.reduce((sum, c) => sum + c.totalPremium, 0).toLocaleString()}
+                ₹{(customers.reduce((sum, c) => sum + c.totalPremium, 0) / 100).toLocaleString('en-IN')}
               </div>
               <div className="text-sm text-gray-600">Total Premium</div>
             </CardContent>

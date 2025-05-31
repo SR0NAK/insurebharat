@@ -3,34 +3,37 @@ import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { 
-  Home, 
+  LayoutDashboard, 
   Users, 
-  FileText, 
-  Calendar, 
+  UserPlus, 
   BarChart3, 
-  Camera, 
   Settings,
+  Shield,
+  Building,
+  FileText,
   Menu,
   Bell,
-  Search
+  Search,
+  LogOut
 } from "lucide-react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 
-const Navigation = () => {
+const AdminNavigation = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
 
   const navigationItems = [
-    { icon: Home, label: "Dashboard", path: "/dashboard" },
-    { icon: Users, label: "Customers", path: "/customers" },
-    { icon: FileText, label: "Policies", path: "/policies" },
-    { icon: Camera, label: "Scan Document", path: "/scan" },
-    { icon: Calendar, label: "Renewals", path: "/renewals" },
-    { icon: BarChart3, label: "Analytics", path: "/analytics" },
-    { icon: Settings, label: "Settings", path: "/settings" },
+    { icon: LayoutDashboard, label: "Admin Dashboard", path: "/admin" },
+    { icon: Users, label: "Manage Brokers", path: "/admin/brokers" },
+    { icon: UserPlus, label: "Staff Management", path: "/admin/staff" },
+    { icon: Building, label: "Organizations", path: "/admin/organizations" },
+    { icon: FileText, label: "System Reports", path: "/admin/reports" },
+    { icon: BarChart3, label: "Analytics", path: "/admin/analytics" },
+    { icon: Shield, label: "Security Center", path: "/admin/security" },
+    { icon: Settings, label: "System Settings", path: "/admin/settings" },
   ];
 
   const handleNavigation = (path: string) => {
@@ -46,8 +49,8 @@ const Navigation = () => {
     <div className="flex flex-col h-full">
       {/* Logo */}
       <div className="p-6 border-b">
-        <h2 className="text-xl font-bold text-blue-900">InsureBharat</h2>
-        <p className="text-sm text-gray-600">Vehicle Insurance Solutions</p>
+        <h2 className="text-xl font-bold text-red-900">InsureBharat</h2>
+        <p className="text-sm text-gray-600">Admin Portal</p>
       </div>
 
       {/* Navigation Items */}
@@ -62,16 +65,16 @@ const Navigation = () => {
               variant={active ? "default" : "ghost"}
               className={`w-full justify-start ${
                 active 
-                  ? "bg-blue-600 text-white hover:bg-blue-700" 
+                  ? "bg-red-600 text-white hover:bg-red-700" 
                   : "text-gray-700 hover:bg-gray-100"
               }`}
               onClick={() => handleNavigation(item.path)}
             >
               <Icon className="h-4 w-4 mr-3" />
               {item.label}
-              {item.label === "Renewals" && (
+              {item.label === "Manage Brokers" && (
                 <Badge className="ml-auto bg-orange-100 text-orange-800 text-xs">
-                  84
+                  3
                 </Badge>
               )}
             </Button>
@@ -79,17 +82,34 @@ const Navigation = () => {
         })}
       </nav>
 
-      {/* User Info */}
-      <div className="p-4 border-t">
+      {/* Admin Info & Logout */}
+      <div className="p-4 border-t space-y-3">
         <div className="flex items-center space-x-3">
-          <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-            <span className="text-white text-sm font-semibold">RS</span>
+          <div className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center">
+            <span className="text-white text-sm font-semibold">AS</span>
           </div>
           <div className="flex-1">
-            <p className="text-sm font-medium">Rajesh Sharma</p>
-            <p className="text-xs text-gray-500">Senior Agent</p>
+            <p className="text-sm font-medium">Admin Singh</p>
+            <p className="text-xs text-gray-500">System Administrator</p>
           </div>
         </div>
+        <Button 
+          variant="outline" 
+          size="sm" 
+          className="w-full justify-start text-red-600 hover:bg-red-50"
+          onClick={() => navigate('/login')}
+        >
+          <LogOut className="h-4 w-4 mr-2" />
+          Logout
+        </Button>
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          className="w-full justify-start"
+          onClick={() => navigate('/')}
+        >
+          Switch to Broker View
+        </Button>
       </div>
     </div>
   );
@@ -114,7 +134,7 @@ const Navigation = () => {
               <NavigationContent />
             </SheetContent>
           </Sheet>
-          <h1 className="text-lg font-semibold text-blue-900">InsureBharat</h1>
+          <h1 className="text-lg font-semibold text-red-900">InsureBharat Admin</h1>
         </div>
         
         <div className="flex items-center space-x-2">
@@ -134,7 +154,7 @@ const Navigation = () => {
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
               <Input 
-                placeholder="Search customers, policies..." 
+                placeholder="Search brokers, policies, reports..." 
                 className="pl-10"
               />
             </div>
@@ -144,17 +164,17 @@ const Navigation = () => {
             <Button variant="ghost" size="sm" className="relative">
               <Bell className="h-4 w-4" />
               <Badge className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center p-0">
-                3
+                5
               </Badge>
             </Button>
             
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                <span className="text-white text-sm font-semibold">RS</span>
+              <div className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center">
+                <span className="text-white text-sm font-semibold">AS</span>
               </div>
               <div>
-                <p className="text-sm font-medium">Rajesh Sharma</p>
-                <p className="text-xs text-gray-500">Senior Agent</p>
+                <p className="text-sm font-medium">Admin Singh</p>
+                <p className="text-xs text-gray-500">System Administrator</p>
               </div>
             </div>
           </div>
@@ -164,4 +184,4 @@ const Navigation = () => {
   );
 };
 
-export default Navigation;
+export default AdminNavigation;
