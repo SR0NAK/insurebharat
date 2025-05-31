@@ -44,10 +44,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setTimeout(async () => {
             try {
               console.log('Fetching roles for user:', session.user.id);
+              console.log('User email:', session.user.email);
+              
               const { data: roles, error } = await supabase
                 .from('user_roles')
                 .select('role')
                 .eq('user_id', session.user.id);
+              
+              console.log('Raw roles response:', { data: roles, error });
               
               if (error) {
                 console.error('Error fetching user roles:', error);
@@ -55,6 +59,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
               } else {
                 const rolesList = roles?.map(r => r.role) || [];
                 console.log('User roles:', rolesList);
+                console.log('Is admin?', rolesList.includes('admin'));
                 setUserRoles(rolesList);
               }
             } catch (error) {
@@ -117,6 +122,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     isBroker: userRoles.includes('broker'),
     isAgent: userRoles.includes('agent')
   };
+
+  console.log('Auth context value:', {
+    userEmail: user?.email,
+    userRoles,
+    isAdmin: userRoles.includes('admin'),
+    loading
+  });
 
   return (
     <AuthContext.Provider value={value}>
