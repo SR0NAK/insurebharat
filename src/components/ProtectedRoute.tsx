@@ -26,10 +26,12 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, adminOnly = f
     return <Navigate to="/login" replace />;
   }
 
+  // For admin-only routes, check if user is admin
   if (adminOnly && !isAdmin) {
     return <Navigate to="/dashboard" replace />;
   }
 
+  // Allow admins to access regular broker/agent routes too
   return <>{children}</>;
 };
 

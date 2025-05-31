@@ -35,6 +35,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
+        console.log('Auth state changed:', event, session?.user?.email);
         setSession(session);
         setUser(session?.user ?? null);
         
@@ -42,12 +43,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           // Fetch user roles
           setTimeout(async () => {
             try {
-              const { data: roles } = await supabase
+              console.log('Fetching roles for user:', session.user.id);
+              const { data: roles, error } = await supabase
                 .from('user_roles')
                 .select('role')
                 .eq('user_id', session.user.id);
               
-              setUserRoles(roles?.map(r => r.role) || []);
+              if (error) {
+                console.error('Error fetching user roles:', error);
+                setUserRoles([]);
+              } else {
+                const rolesList = roles?.map(r => r.role) || [];
+                console.log('User roles:', rolesList);
+                setUserRoles(rolesList);
+              }
             } catch (error) {
               console.error('Error fetching user roles:', error);
               setUserRoles([]);

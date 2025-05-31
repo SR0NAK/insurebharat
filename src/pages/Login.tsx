@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,7 +11,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { signIn, user, isAdmin } = useAuth();
+  const { signIn, user, isAdmin, loading: authLoading } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -20,14 +20,23 @@ const Login = () => {
     password: ''
   });
 
-  // Redirect if already logged in
-  if (user) {
-    if (isAdmin) {
-      navigate('/admin');
-    } else {
-      navigate('/dashboard');
+  // Handle redirect after login
+  useEffect(() => {
+    if (user && !authLoading) {
+      console.log('User logged in, isAdmin:', isAdmin);
+      if (isAdmin) {
+        console.log('Redirecting admin to /admin');
+        navigate('/admin');
+      } else {
+        console.log('Redirecting user to /dashboard');
+        navigate('/dashboard');
+      }
     }
-    return null;
+  }, [user, isAdmin, authLoading, navigate]);
+
+  // Redirect if already logged in
+  if (user && !authLoading) {
+    return null; // Will be handled by useEffect above
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -41,8 +50,8 @@ const Login = () => {
       if (error) {
         setError(error.message);
       } else {
-        // Navigation will be handled by the auth context
-        console.log('Login successful');
+        console.log('Login successful, waiting for auth state update...');
+        // Navigation will be handled by useEffect after auth state updates
       }
     } catch (err) {
       setError('An unexpected error occurred');
