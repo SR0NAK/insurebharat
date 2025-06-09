@@ -31,6 +31,32 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
   const [userRoles, setUserRoles] = useState<string[]>([]);
 
+  const fetchUserRoles = async (userId: string) => {
+    try {
+      console.log('Fetching roles for user:', userId);
+      
+      const { data: roles, error } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', userId);
+      
+      console.log('Raw roles response:', { data: roles, error });
+      
+      if (error) {
+        console.error('Error fetching user roles:', error);
+        setUserRoles([]);
+      } else {
+        const rolesList = roles?.map(r => r.role) || [];
+        console.log('User roles:', rolesList);
+        console.log('Is admin?', rolesList.includes('admin'));
+        setUserRoles(rolesList);
+      }
+    } catch (error) {
+      console.error('Error fetching user roles:', error);
+      setUserRoles([]);
+    }
+  };
+
   useEffect(() => {
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
@@ -40,33 +66,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setUser(session?.user ?? null);
         
         if (session?.user) {
-          // Fetch user roles
-          setTimeout(async () => {
-            try {
-              console.log('Fetching roles for user:', session.user.id);
-              console.log('User email:', session.user.email);
-              
-              const { data: roles, error } = await supabase
-                .from('user_roles')
-                .select('role')
-                .eq('user_id', session.user.id);
-              
-              console.log('Raw roles response:', { data: roles, error });
-              
-              if (error) {
-                console.error('Error fetching user roles:', error);
-                setUserRoles([]);
-              } else {
-                const rolesList = roles?.map(r => r.role) || [];
-                console.log('User roles:', rolesList);
-                console.log('Is admin?', rolesList.includes('admin'));
-                setUserRoles(rolesList);
-              }
-            } catch (error) {
-              console.error('Error fetching user roles:', error);
-              setUserRoles([]);
-            }
-          }, 0);
+          // Fetch user roles with a small delay to ensure the database is ready
+          setTimeout(() => {
+            fetchUserRoles(session.user.id);
+          }, 50);
         } else {
           setUserRoles([]);
         }
@@ -77,8 +80,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     // Check for existing session
     supabase.auth.getSession().then(({ data: { session } }) => {
+      console.log('Initial session check:', session?.user?.email);
       setSession(session);
       setUser(session?.user ?? null);
+      
+      if (session?.user) {
+        fetchUserRoles(session.user.id);
+      }
+      
       setLoading(false);
     });
 

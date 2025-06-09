@@ -23,20 +23,33 @@ const Login = () => {
   // Handle redirect after login
   useEffect(() => {
     if (user && !authLoading) {
-      console.log('User logged in, isAdmin:', isAdmin);
-      if (isAdmin) {
-        console.log('Redirecting admin to /admin');
-        navigate('/admin');
-      } else {
-        console.log('Redirecting user to /dashboard');
-        navigate('/dashboard');
-      }
+      console.log('Login redirect - User logged in, isAdmin:', isAdmin, 'user email:', user.email);
+      
+      // Add a small delay to ensure role loading is complete
+      const timer = setTimeout(() => {
+        if (isAdmin) {
+          console.log('Redirecting admin to /admin');
+          navigate('/admin', { replace: true });
+        } else {
+          console.log('Redirecting user to /dashboard');
+          navigate('/dashboard', { replace: true });
+        }
+      }, 100);
+
+      return () => clearTimeout(timer);
     }
   }, [user, isAdmin, authLoading, navigate]);
 
   // Redirect if already logged in
   if (user && !authLoading) {
-    return null; // Will be handled by useEffect above
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Redirecting...</p>
+        </div>
+      </div>
+    );
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -45,15 +58,18 @@ const Login = () => {
     setError(null);
 
     try {
+      console.log('Attempting login with:', formData.email);
       const { error } = await signIn(formData.email, formData.password);
       
       if (error) {
+        console.error('Login error:', error);
         setError(error.message);
       } else {
         console.log('Login successful, waiting for auth state update...');
         // Navigation will be handled by useEffect after auth state updates
       }
     } catch (err) {
+      console.error('Unexpected login error:', err);
       setError('An unexpected error occurred');
     } finally {
       setLoading(false);
